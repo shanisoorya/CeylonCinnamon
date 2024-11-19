@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/tab.css">
+    <title>Product Details</title>
+</head>
+<body>
+    <?php include 'fetch_product.php'; ?>
+    <div class="container">
+        <div class="box">
+            <div class="images">
+                <?php foreach ($products as $index => $product): ?>
+                    <div class="img-holder <?php echo $index === 0 ? 'active' : ''; ?>">
+                        <img src="<?php echo htmlspecialchars($product['product_image']); ?>" alt="Product Image" onclick="showImage(this)">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+            <div class="basic-info">
+                <h1><?php echo htmlspecialchars($products[0]['product_name']); ?></h1>
+                <div class="rate">
+                    <i class="filled fas fa-star"></i>
+                    <i class="filled fas fa-star"></i>
+                    <i class="filled fas fa-star"></i>
+                    <i class="filled fas fa-star"></i>
+                    <i class="filled fas fa-star"></i>
+                </div>
+                <span>$250</span>
+                <div class="options">
+                    <a href="#">Buy It Now</a>
+                    <a href="#">Add to Cart</a>
+                    <div class="quantity">
+                        <p>Quantity :</p>
+                        <select onchange="updatePrice(this)">
+                            <option value="100">100ml</option>
+                            <option value="200">200ml</option>
+                            <option value="500">500ml</option>
+                            <option value="1000">1l</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-box">
+                <div class="description">
+                    <p>The scent of cinnamon is spicy, sweet, and for many, filled with happy memories of delicious food and cozy days. Cinnamon oil is prized for its lush fragrance. It’s also linked to several health and beauty benefits.</p>
+                    <p>Most commercially available cinnamon oil is derived from the Cinnamomum cassia tree and is called cassia cinnamon. Cinnamon that comes from the Cinnamomum verum is called Ceylon cinnamon. This variety is more expensive.</p>
+                    <ul class="features">
+                        <li><i class="fa-solid fa-circle-check"></i>High quality authentic 100% Ceylon Cinnamon Oil.</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Mostly used for aromatherapy and food flavoring.</li>
+                        <li><i class="fa-solid fa-circle-check"></i>Much lower Coumarin content (0.01%).</li>
+                        <li><i class="fa-solid fa-circle-check"></i>It always gives a positive mood.</li>
+                    </ul>
+                    <ul class="social">
+                        <li><a href="#"><i class="fa-brands fa-facebook-f"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="#"><i class="fa-brands fa-twitter"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showImage(clickedImg) {
+            var activeImgHolder = document.querySelector('.img-holder.active img');
+            activeImgHolder.src = clickedImg.src;
+        }
+        
+        function updatePrice(select) {
+            var pricePerKg = 1000; // Price per kilogram (Rs.1000)
+            var selectedQuantity = select.value;
+            var price = (selectedQuantity / 1000) * pricePerKg; // Convert selected quantity to kilograms and calculate price
+            var priceSpan = document.querySelector('.basic-info span');
+            priceSpan.textContent = 'LKR.' + price.toFixed(2) + '/='; // Update price display with 2 decimal places
+        }
+    </script>
+    
+</body>
+</html>
